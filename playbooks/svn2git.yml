@@ -1,0 +1,11 @@
+---
+
+- include: setup-base.yml
+- include: setup-docker.yml
+
+- hosts: localhost
+
+  roles:
+    - role: svn2git
+
+

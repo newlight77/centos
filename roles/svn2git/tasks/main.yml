@@ -1,0 +1,25 @@
+---
+
+- name: Create /apps/svn2git/
+  file:
+    path: /apps/svn2git/
+    state: directory
+  become: yes
+
+- name: copy docker-compose.yml file
+  template:
+    src: docker-compose.yml.j2
+    dest: /apps/svn2git/docker-compose.yml
+    owner: '{{ansible_user}}'
+    group: '{{ansible_user}}'
+    mode: 0644
+  become: yes
+
+- name: copy migrate.sh file
+  template:
+    src: migrate.sh.j2
+    dest: /apps/svn2git/migrate.sh
+    owner: '{{ansible_user}}'
+    group: '{{ansible_user}}'
+    mode: 0777
+  become: yes

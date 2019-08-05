@@ -1,0 +1,51 @@
+#!/bin/bash
+
+echo -n "Enter project > "
+read project
+{
+  printf "\n## ########################################\n"
+  printf "\n## Starting migrate.sh script\n"
+  printf "\n## ########################################\n"
+
+  mkdir $project
+  chmod 777 $project
+  cd $project
+
+  if [ ! -d ".git" ]; then
+          echo -n "Enter url svn > "
+          read svn_repo
+          echo -n "Enter svn username > "
+          read username
+          echo -n  "Enter svn password > "
+          read -s password
+
+          printf "\n## Info about SVN repository...\n"
+          svn info $svn_repo --username $username --password $password
+
+
+          printf "\n## ########################################\n"
+          printf "\n## Init Git repository...\n"
+          echo -n "Enter git repository > "
+          read git_repo
+          printf "\n"
+
+          svn2git $svn_repo --trunk trunk --branches branches --tags tags
+            git remote add origin $git_repo
+            git config --add remote.origin.push 'refs/remotes/svn/*:refs/heads/*'
+            git gc
+  fi
+
+  git config --global http.sslVerify false
+
+  # Rebase
+  printf "\n## Rebasing...\n"
+  svn2git --rebase
+
+  printf "\n## Pushing to Git repository...\n"
+  git push origin --all
+  git push origin --tags
+
+  cd ..
+  rm -rf $project
+
+} | tee  logs/svn2git-$(date +%F+%T).log 
