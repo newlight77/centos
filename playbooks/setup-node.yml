@@ -1,0 +1,7 @@
+---
+
+- hosts: localhost
+
+  roles:
+    - role: node
+    - role: npm-packages

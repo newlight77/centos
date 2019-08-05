@@ -9,6 +9,7 @@
     - role: rpmfusion
     - role: bash-custom
     - role: docker
+    - role: node
 
   tasks:
     - include: tasks/cleanup.yml

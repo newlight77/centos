@@ -1,0 +1,7 @@
+---
+
+nodejs:
+  # Version of Node.js ("5.x", "6.x", "7.x").
+  # https://github.com/nodesource/distributions
+  major_version: 12
+  version: 12.7.0
