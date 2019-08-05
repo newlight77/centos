@@ -1,0 +1,3 @@
+---
+
+- import_playbook: ../../../playbooks/svn2git.yml
