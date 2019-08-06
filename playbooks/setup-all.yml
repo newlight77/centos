@@ -1,5 +1,6 @@
 ---
 
-- import_playbook: setup-base.yml
-- import_playbook: setup-docker.yml
-- import_playbook: setup-node.yml
+# - import_playbook: setup-base.yml
+# - import_playbook: setup-docker.yml
+# - import_playbook: setup-node.yml
+- import_playbook: setup-java.yml

@@ -1,0 +1,58 @@
+---
+
+
+- name: "Create {{ apps_dir }} directory"
+  file:
+    path: "{{ apps_dir }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    state: directory
+  become: yes
+
+- stat:
+    path: "{{ maven.dir }}"
+  register: maven_dir
+
+- debug:
+    msg: "maven_dir = {{ maven_dir.stat.isdir }}"
+  when: maven_dir.stat.isdir is defined
+
+- block:
+
+  - name: get Maven tarball
+    get_url:
+      url: "{{maven.url}}"
+      dest: "/tmp/{{maven.file}}"
+
+  - name: Unarchive maven
+    unarchive:
+      src: "/tmp/{{maven.file}}"
+      dest: "{{apps_dir}}"
+      copy: no
+
+  - name: Remove old symlink
+    file:
+      path: "{{apps_dir}}/maven"
+      state: absent
+
+  - file:
+      src: "{{maven.dir}}"
+      dest: "{{apps_dir}}/maven"
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      state: link
+
+  - name: Remove old path configuration
+    file:
+      path: /etc/profile.d/maven.sh
+      state: absent
+    become: yes
+
+  - name: "Configuring maven home {{maven.dir}} and add $PATH."
+    template:
+      src: maven.sh.j2
+      dest: /etc/profile.d/maven.sh
+      mode: 0644
+    become: yes
+
+  when: maven_dir.stat.isdir is not defined

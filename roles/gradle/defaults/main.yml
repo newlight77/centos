@@ -1,0 +1,11 @@
+---
+
+gradle_version: 5.5.1
+gradle:
+  version: 5.5.1
+  checksum: sha256:222a03fcf2fcaf3691767ce9549f78ebd4a77e73f9e23a396899fb70b420cd00
+  download: "/tmp/gradle-{{ gradle_version }}-bin.zip"
+  download_url: "https://services.gradle.org/distributions/gradle-{{ gradle_version }}-bin.zip"
+  base_dir: /usr/local/share/
+  extract_dir:  "gradle-{{ gradle_version }}"
+  link: /usr/local/bin/gradle

@@ -1,0 +1,55 @@
+---
+
+- name: "Check gradle version is present"
+  shell: "{{ gradle.link }} -v | grep Gradle | awk '{print $2}' 2>&1 "
+  changed_when: false
+  register: current_version
+
+- debug:
+    msg: "Required version = {{ gradle.version }} and current_version = {{ current_version }}"
+
+- block:
+
+  - name: "Download gradle"
+    get_url:
+      url: "{{ gradle.download_url }}"
+      dest: "{{ gradle.download }}"
+      checksum: "{{ gradle.checksum }}"
+
+  - name: "Extract Gradle {{ gradle.version }}"
+    unarchive:
+      src: "{{ gradle.download }}"
+      dest: "{{ gradle.base_dir }}"
+      remote_src: True
+    become: yes
+
+  - name: "Add gradle symlink to path"
+    file:
+      src: "{{ gradle.base_dir }}/{{ gradle.extract_dir }}/bin/gradle"
+      dest: "{{ gradle.link }}"
+      owner: root
+      group: root
+      state: link
+    become: yes
+
+  - name: "Validate Gradle version"
+    shell: "{{ gradle.link }} -v | grep {{ gradle.version }}"
+    register: gradle_ver
+
+  - fail:
+      msg: "Seems to be gradle {{ gradle.version }} is missing ... aborting"
+    when: gradle_ver.rc != 0
+
+  when: 
+    - current_version is succeeded
+    - current_version is defined
+    - current_version.stdout == "" or current_version.stdout | version_compare(gradle.version, operator='<', strict=True)
+
+- name: "Validate Gradle version"
+  shell: "{{ gradle.link }} -v | grep {{ gradle.version }}"
+  changed_when: False
+  register: gradle_ver
+
+- debug:
+    msg: "Gradle {{ gradle.version }} is installed"
+  when: gradle_ver.rc == 0
