@@ -1,0 +1,63 @@
+---
+
+- name: check version of docker
+  shell: docker --version 2>&1 | grep -v not | sed -e 's/,//' | awk '{print $3}'
+  register: current_version
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+  args:
+    warn: no
+  become: yes
+
+- debug:
+    msg: "Required version = {{ docker.version }} and current_version = {{ current_version }}"
+
+- block:
+
+  - name: Ensure old versions of Docker along with its dependencies are not installed.
+    package:
+      name: '{{ item }}'
+      state: absent
+    become: yes
+    with_items:
+      - docker
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-selinux
+      - docker-engine-selinux
+      - docker-engine
+
+  - name: Ensure pre-requisite packages are installed.
+    package:
+      name: '{{ item }}'
+      state: present
+    become: yes
+    with_items:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+
+  - name: Add Docker repository.
+    get_url:
+      url: "https://download.docker.com/linux/centos/docker-ce.repo"
+      dest: '/etc/yum.repos.d/docker-ce.repo'
+      owner: root
+      group: root
+      mode: 0644
+    become: yes
+
+  - name: Install Docker.
+    package:
+      name: docker-ce
+      state: present
+    become: yes
+
+  when: 
+    - current_version is succeeded
+    - current_version is defined
+    - current_version.stdout == "" or current_version.stdout | version_compare(docker.version, operator='<', strict=True)

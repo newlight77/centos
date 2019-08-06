@@ -8,6 +8,7 @@
     - role: sudoers
     - role: rpmfusion
     - role: bash-custom
+    - role: docker
 
   tasks:
     - include: tasks/cleanup.yml

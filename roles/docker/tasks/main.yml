@@ -1,0 +1,11 @@
+---
+
+# Setup/install tasks.
+- include: setup-{{ ansible_distribution }}.yml
+- include: docker-compose-{{ ansible_distribution }}.yml
+- include: docker-group.yml
+
+- name: "Ensure Docker is restarted"
+  command: /bin/true
+  notify: Restart Docker
+  when: ansible_env.USER is defined
