@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "run", type: "shell", inline: <<-SHELL
     cd /vagrant
-    su -c "ansible-playbook -u vagrant ./tests/test.yml -i ./tests" vagrant
+    su -c "ansible-playbook -u vagrant ./tests/test.yml -i ./tests/inventories" vagrant
   SHELL
 
  end

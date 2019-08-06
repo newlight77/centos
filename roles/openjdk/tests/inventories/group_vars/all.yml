@@ -5,4 +5,4 @@ configure_sudoers: yes
 
 apps_dir: /apps
 
-gradle_version: 5.5.1
+openjdk_version: 11

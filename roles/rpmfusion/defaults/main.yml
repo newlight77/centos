@@ -1,6 +1,8 @@
 ---
 
 rpmfusion:
-  centos.version: 7
-  fedora.version: 30
+  centos:
+    version: 7
+  fedora:
+    version: 30
 

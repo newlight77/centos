@@ -1,0 +1,2 @@
+---
+openjdk_jdk_package_name: "java-{{ openjdk_version }}-openjdk.x86_64"
