@@ -1,0 +1,54 @@
+---
+
+- name: Ensure user group {{user_group}}
+  group:
+    name: "{{user_group}}"
+  become: yes
+
+- name: Add users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.group|default(item.name) }}"
+    system: "{{ item.sudoer }}"
+    shell: /bin/bash
+    append: yes
+    # this is just a default password, it's SHA512 for "changeme"
+    password: $6$rounds=656000$iO7Q9L6/w8dUUQVf$rmtnxrQ15TGAfG5ODxQ/WGyEpTwk.vD1W.UtedmOlo9YNkrIwapYMjmKmteEnUJmRYucgUVxXUQy7gtenpLmw0
+    update_password: on_create
+  with_items: "{{ users }}"
+  become: yes
+
+- name: Add .ssh directories
+  file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    mode: 0700
+    owner: "{{ item.name }}"
+    group: "{{ item.group|default(item.name) }}"
+  with_items: "{{ users }}"
+  become: yes
+
+- name: Add public ssh key to authorized_keys
+  lineinfile:
+    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    state: present
+    create: yes
+    line: "{{ item.auth_key }}"
+    owner: "{{ item.name }}"
+    group: "{{ item.group|default(item.name) }}"
+    mode: 0644
+  when: item.auth_key is defined
+  with_items: "{{ users }}"
+  become: yes
+
+- name: Add to sudoers
+  copy:
+    dest: "/etc/sudoers.d/{{ item.name }}"
+    content: |
+             {{ item.name }}  ALL=(ALL) ALL
+             {{ item.name }}  ALL=({{ item.group }},{{ item.name }}) NOPASSWD:ALL
+             {{ item.name }}  ALL=(root) NOPASSWD:/usr/bin/supervisorctl
+  when: item.sudoer
+  with_items: "{{ users }}"
+  become: yes
+

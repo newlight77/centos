@@ -1,0 +1,7 @@
+user_group: "devops"
+
+users:
+  - name: kong
+    group: "{{user_group}}"
+    sudoer: true
+    auth_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsn6q6Wpu1m2W1ux89mgbzPlMNNifhYgSwqxcp/UeVUxiAPezIaLL7gixN+Jb1/N/HVxIsZbmlXTgoXHeR+YqLV/feqn9rNGbPzrPXhglSgxdC+Xu2I7RjS66RWtsDM0NPrml2l7S55FPuU3gQlO/BcMYxaxkDe2k2uGsfTprBPECE5xnJpXc77MAazh6PdHcrLQQsF6izyyivBgfRGyIG1m3TAsp7oPSXO8jqKOxQPIudnRy/ZEx/mLwTCr2ckQEq4MY/ZY+ljQfJ5zqSxoRSxJquzcRXFBHhHw3Yb7E7kUl/VCQKXqa0OZHtIaeDAJYcrM2k8H0czrwKQVuwHDpb kong@Kongs-iMac.local

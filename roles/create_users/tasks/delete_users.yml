@@ -1,0 +1,43 @@
+---
+
+- name: Determine existing users
+  shell: 'grep {{user_group}} /etc/group | cut -d: -f4 | tr "," "\n"'
+  changed_when: false
+  register: existing_users
+
+- name: existing_users
+  debug:
+    msg: "{{existing_users.stdout_lines}}"
+
+- name: Determine users to be removed
+  set_fact:
+    to_be_removed_users: "{{ existing_users.stdout_lines | difference(users | map(attribute='name') | list) }}"
+
+- name: to_be_removed_users
+  debug:
+    msg: "{{to_be_removed_users}}"
+
+- name: Remove from sudoers
+  debug:
+    msg: "echo {{to_be_removed_users}}"
+  when : to_be_removed_users is defined and (to_be_removed_users|length>0)
+
+- name: Remove from sudoers
+  file:
+    path: "/etc/sudoers.d/{{ item }}"
+    state: absent
+  when : to_be_removed_users is defined and (to_be_removed_users|length>0)
+  with_items: "{{ to_be_removed_users }}"
+
+- name: Delete user home directories
+  file:
+    path: "/home/{{ item }}/"
+    state: absent
+  when : to_be_removed_users is defined and (to_be_removed_users|length>0)
+  with_items: "{{ to_be_removed_users }}"
+
+- name: Delete user accounts
+  user:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ to_be_removed_users }}"

@@ -1,0 +1,5 @@
+[all]
+localhost.localdomain	ansible_connection=local
+
+[localhost]
+localhost.localdomain	ansible_connection=local

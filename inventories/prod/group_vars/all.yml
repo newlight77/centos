@@ -1,0 +1,17 @@
+---
+apps_dir: /apps
+
+common:
+  force_install: False
+  # packages:
+  #   - autoconf
+  #   - bash-completion
+  
+motd:
+  install: True
+  
+rpmfusion:
+  centos:
+    version: 7
+  fedora:
+    version: 30

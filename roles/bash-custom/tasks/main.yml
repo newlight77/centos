@@ -1,0 +1,33 @@
+---
+
+- name: Ansible check directory exists.
+  stat:
+    path: "{{playbook_dir}}/.bash_custom_installed"
+  register: bash_custom_installed
+
+- debug:
+    msg: "bash_custom_installed = {{ bash_custom_installed.stat }}"
+
+- block:
+
+  - name: Remove old path configuration
+    file:
+      path: "{{ playbook_dir }}/bash_custom"
+      state: absent
+
+  - name: Ensure pre-requisite packages are installed for docker_compose.
+    package:
+      name: '{{ item }}'
+      state: present
+    become: yes
+    with_items:
+      - git
+
+  - name: Cloning bash_custom
+    shell: "git clone https://github.com/newlight77/bash_custom.git "
+
+  - name: Customizing
+    shell: "{{ playbook_dir }}/bash_custom/customize.sh"
+
+  when: 
+    - common_force_install|default(false)|bool == true or not bash_custom_installed.stat.exists 

@@ -1,0 +1,20 @@
+---
+- name: remove additional packages
+  apt: 
+    name: "{{ item }}"
+    state: absent
+  become: yes
+  with_items: []
+
+- name: cleaning task for apt
+  command: apt clean autoremove
+  become: yes
+
+- name: delete cache files
+  file: 
+    path: /var/cache/{{ item }}
+    state=: bsent
+  become: yes
+  with_items:
+    - zip
+

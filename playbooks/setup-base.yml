@@ -1,0 +1,18 @@
+---
+
+- hosts: all
+
+  roles:
+    - role: common
+    - role: motd
+    - role: create_users
+    - role: sudoers
+    - role: rpmfusion
+    - role: bash-custom
+
+  tasks:
+    - include: ../tasks/cleanup.yml
+
+  handlers:
+   - include: ../handlers/system.yml
+   - include: ../handlers/services.yml

@@ -1,0 +1,42 @@
+---
+
+- name: Ansible check directory exists.
+  stat:
+    path: "{{playbook_dir}}/.common_packages_installed"
+  register: common_packages_installed
+
+- debug:
+    msg: "common_packages_installed = {{ common_packages_installed.stat }}"
+
+- block:
+
+  - name: Include OS-specific variables.
+    include_vars: "{{ ansible_distribution }}.yml"
+
+  - name: Define __common_packages from __vars_common_packages
+    set_fact:
+      __common_packages: "{{ __vars_common_packages | list }}"
+    when: common.packages is undefined
+  
+  - name: Define __common_packages from common.packages
+    set_fact:
+      __common_packages: "{{ common.packages | list }}"
+    when: common.packages is defined
+
+  - name: Ensure common packages are installed.
+    package:
+      name: "{{ item }}"
+      state: installed
+    with_items: "{{ __common_packages }}"
+    become: yes
+
+  - name: Marked as installed once
+    file:
+      path: "{{ playbook_dir }}/.common_packages_installed"
+      state: directory
+      mode: 0700
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+
+  when: 
+    - common.force_install|default(false)|bool == true or not common_packages_installed.stat.exists 

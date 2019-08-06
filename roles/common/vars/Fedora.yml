@@ -1,0 +1,36 @@
+---
+__vars_common_packages:
+  - autoconf
+  - bash-completion
+  - bzip2
+  - curl
+  - diffutils
+  - dnf
+  - dos2unix
+  - gawk
+  - gcc
+  - git
+  - grep
+  - gzip
+  - htop
+  - iftop
+  - iotop
+  - jq
+  - less
+  - make
+  - nano
+  - nmap
+  - ntp
+  - ntpdate
+  - openssl
+  - p7zip
+  - pbzip2
+  - pwgen
+  - python3-dnf
+  - sudo
+  - tar
+  - unzip
+  - wget
+  - whois
+  - zip
+  - unzip

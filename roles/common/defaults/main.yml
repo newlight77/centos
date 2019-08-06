@@ -1,0 +1,5 @@
+common:
+  force_install: False
+  # packages:
+  #   - autoconf
+  #   - bash-completion
