@@ -1,5 +1,8 @@
 ---
 
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_distribution }}.yml"
+
 - name: "Check gradle version is present"
   shell: "{{ gradle.link }} -v | grep Gradle | awk '{print $2}' 2>&1 "
   changed_when: false
