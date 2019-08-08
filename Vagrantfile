@@ -4,11 +4,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 
-os = ENV['OS'] || 'fedora'
-if os == 'centos'
-  box_name = 'centos/7'
-else
+os = ENV['OS'] || 'centos'
+if os == 'fedora'
   box_name = 'fedora/30-cloud-base'
+else
+  box_name = 'centos/7'
 end
 
 

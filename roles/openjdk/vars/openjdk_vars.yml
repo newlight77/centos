@@ -1,0 +1,5 @@
+---
+openjdk:
+  version: '{{openjdk_version}}'
+  major_version: '{{openjdk_major_version}}'
+  package_name: "java-{{ openjdk_major_version }}-openjdk.x86_64"

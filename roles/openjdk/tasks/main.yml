@@ -1,10 +1,7 @@
 ---
 
 - name: load variables
-  include_vars: "{{ ansible_distribution }}.yml"
-
-- name: Include OS-specific variables.
-  include_vars: "{{ ansible_distribution }}.yml"
+  include_vars: "openjdk_vars.yml"
 
 - name: "Check openjdk version is present"
   shell: "java --version | grep openjdk | awk '{print $2}' 2>&1"
@@ -12,7 +9,7 @@
   register: current_version
 
 - debug:
-    msg: "Required version = {{ openjdk_version }} and current_version = {{ current_version }}"
+    msg: "Required version = {{ openjdk.version }} and current_version = {{ current_version }}"
 
 - block:
 
@@ -20,10 +17,10 @@
     become: yes
     become_user: root
     package:
-      name: "{{ openjdk_jdk_package_name }}"
+      name: "{{ openjdk.package_name }}"
       state: present
     tags:
-      - openjdk_jdk_install_package
+      - openjdk_install_package
 
   - name: "Validate openjdk version"
     shell: "java --version | grep openjdk | awk '{print $2}' 2>&1"
@@ -36,4 +33,4 @@
   when: 
     - current_version is succeeded
     - current_version is defined
-    - current_version.stdout == "" or openjdk_version.stdout | version_compare(openjdk_version, operator='<', strict=True)
+    - current_version.stdout == "" or current_version.stdout | version_compare(openjdk.version, operator='<', strict=True)

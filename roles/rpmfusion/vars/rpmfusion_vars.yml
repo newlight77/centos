@@ -1,0 +1,7 @@
+---
+rpmfusion:
+  version: "{{rpmfusion_version}}"
+  rpms: 
+    - https://download1.rpmfusion.org/free/el/rpmfusion-free-release-{{ rpmfusion_version }}.noarch.rpm
+    - https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-{{ rpmfusion_version }}.noarch.rpm
+

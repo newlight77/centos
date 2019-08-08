@@ -2,6 +2,7 @@
 maven:
   major: "{{maven_major}}"
   version: "{{maven_version}}"
+  checksum: "sha512:b4880fb7a3d81edd190a029440cdf17f308621af68475a4fe976296e71ff4a4b546dd6d8a58aaafba334d309cc11e638c52808a4b0e818fc0fd544226d952544"
   url: "https://archive.apache.org/dist/maven/maven-{{maven_major}}/{{maven_version}}/binaries/apache-maven-{{maven_version}}-bin.tar.gz"
   dir: "{{apps_dir}}/apache-maven-{{maven_version}}"
   file: "apache-maven-{{maven_version}}-bin.tar.gz"

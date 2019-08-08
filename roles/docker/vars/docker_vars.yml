@@ -1,0 +1,8 @@
+---
+docker:
+  version: "{{docker_version}}"
+
+docker_compose:
+  version: "{{docker_compose_version}}"
+
+

@@ -1,7 +1,7 @@
 ---
 
-- name: Include OS-specific variables.
-  include_vars: "{{ ansible_distribution }}.yml"
+- name: load variables.
+  include_vars: "maven_vars.yml"
 
 - name: "Create {{ apps_dir }} directory"
   file:
@@ -21,10 +21,11 @@
 
 - block:
 
-  - name: get Maven tarball
+  - name: download Maven tarball
     get_url:
       url: "{{maven.url}}"
       dest: "/tmp/{{maven.file}}"
+      checksum: "{{ maven.checksum }}"
 
   - name: Unarchive maven
     unarchive:

@@ -1,5 +1,8 @@
 ---
 
+- name: load variables.
+  include_vars: "common_vars.yml"
+
 - name: Ansible check directory exists.
   stat:
     path: "{{playbook_dir}}/.common_packages_installed"
@@ -10,24 +13,16 @@
 
 - block:
 
-  - name: Include OS-specific variables.
-    include_vars: "{{ ansible_distribution }}.yml"
-
-  - name: Define __common_packages from __vars_common_packages
+  - name: Define common_packages from common_vars
     set_fact:
-      __common_packages: "{{ __vars_common_packages | list }}"
-    when: common.packages is undefined
-  
-  - name: Define __common_packages from common.packages
-    set_fact:
-      __common_packages: "{{ common.packages | list }}"
-    when: common.packages is defined
+      common_packages: "{{ common.packages | list }}"
+    when: common_packages is undefined
 
   - name: Ensure common packages are installed.
     package:
       name: "{{ item }}"
       state: installed
-    with_items: "{{ __common_packages }}"
+    with_items: "{{ common_packages }}"
     become: yes
 
   - name: Marked as installed once

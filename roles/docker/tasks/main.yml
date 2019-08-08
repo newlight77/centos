@@ -1,9 +1,12 @@
 ---
 
+- name: load variables.
+  include_vars: "docker_vars.yml"
+
 # Setup/install tasks.
-- include: setup-{{ ansible_distribution }}.yml
-- include: docker-compose-{{ ansible_distribution }}.yml
-- include: docker-group.yml
+- include: setup-docker.yml
+- include: setup-docker-compose.yml
+- include: setup-docker-group.yml
 
 - name: "Ensure Docker is restarted"
   command: /bin/true

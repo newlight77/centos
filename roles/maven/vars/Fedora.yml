@@ -1,7 +1,0 @@
----
-maven:
-  major: "{{maven_major}}"
-  version: "{{maven_version}}"
-  url: "https://archive.apache.org/dist/maven/maven-{{maven_major}}/{{maven_version}}/binaries/apache-maven-{{maven_version}}-bin.tar.gz"
-  dir: "{{apps_dir}}/apache-maven-{{maven_version}}"
-  file: "apache-maven-{{maven_version}}-bin.tar.gz"

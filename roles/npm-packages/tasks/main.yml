@@ -1,4 +1,6 @@
 ---
+- name: load variables.
+  include_vars: "npm_vars.yml"
 
 - name: Define npm_packages.
   set_fact:

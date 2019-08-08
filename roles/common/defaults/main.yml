@@ -1,5 +1,4 @@
-common:
-  force_install: False
-  # packages:
-  #   - autoconf
-  #   - bash-completion
+common_force_install: False
+#common_packages:
+#  - autoconf
+#  - bash-completion

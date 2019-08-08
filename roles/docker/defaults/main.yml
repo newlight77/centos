@@ -1,7 +1,5 @@
 ---
 
-docker:
-  version: 18.09.2
+docker_version: 18.09.2
 
-docker_compose:
-  version: 1.23.2
+docker_compose_version: 1.23.2
