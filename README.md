@@ -1,9 +1,9 @@
-# fedora-centos
+# centos
 
-[![Build Status](https://travis-ci.org/newlight77/fedora-centos.svg?branch=master)](https://travis-ci.org/newlight77/fedora-centos)
-[![GitHub license](https://img.shields.io/github/license/newlight77/fedora-centos?color=blue&label=license)](https://github.com/newlight77/fedora-centos/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/newlight77/centos.svg?branch=master)](https://travis-ci.org/newlight77/centos)
+[![GitHub license](https://img.shields.io/github/license/newlight77/centos?color=blue&label=license)](https://github.com/newlight77/centos/blob/master/LICENSE)
 
-This an Ansible Playbook for RedHat Family OS (Fedora, Centos and RedHat) Installation. It can be a great way to setup a development environment or a simple lab deployment.
+This an Ansible Playbook for CentOS Installation. It can be a great way to setup a development environment or a simple lab deployment.
 
 ## Requirements
 
@@ -14,8 +14,8 @@ This an Ansible Playbook for RedHat Family OS (Fedora, Centos and RedHat) Instal
 Start by cloning the repository:
 
 ```sh
-git clone https://github.com/newlight77/fedora-centos /apps/fedora-centos
-cd /apps/fedora-centos
+git clone https://github.com/newlight77/centos /apps/centos
+cd /apps/centos
 ```
 
 There are three main steps for perform the setup:
