@@ -2,18 +2,10 @@
 
 ## Pre-requisites
 
-- Git repository as source with standard structure
-  - trunk
-  - tags
-  - branches
-- Non standard repository structure:
-  - the migrate.sh script must be adapted to point to correct folder mapping as where svn2git is called.
+- Git repository 
+- Svn repository
 
-```sh
-svn2git $svn_repo --trunk trunk --branches branches --tags tags
-```
-
-## Migration guide
+## Steps
 
 1. clone the tool kit repositoy centos
 
