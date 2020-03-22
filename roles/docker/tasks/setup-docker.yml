@@ -10,8 +10,8 @@
     warn: no
   become: yes
 
-- debug:
-    msg: "Required version = {{ docker.version }} and current_version = {{ current_version }}"
+- name: debug
+  msg: "Required version = {{ docker.version }} and current_version = {{ current_version }}"
 
 - block:
 

@@ -18,6 +18,7 @@ common:
     - make
     - nano
     - nmap
+    - net-tools
     - ntp
     - ntpdate
     - openssl

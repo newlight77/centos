@@ -6,6 +6,7 @@
     - role: common
     - role: motd
     - role: create_users
+    - role: sshd
     - role: sudoers
     - role: rpmfusion
     - role: bash-custom

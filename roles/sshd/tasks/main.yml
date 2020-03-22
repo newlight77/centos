@@ -1,0 +1,10 @@
+---
+
+- name: Enable ssh login using public key
+  shell: sed -e 's/#PubkeyAuthentication/PubkeyAuthentication/' -e 's/#AuthorizedKeysFile/AuthorizedKeysFile/ /etc/ssh/sshd_config'
+  become: yes
+
+- name: "Ensure SSHD is restarted"
+  command: /bin/true
+  notify: Restart SSHD
+  when: ansible_env.USER is defined
