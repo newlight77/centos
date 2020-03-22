@@ -2,4 +2,4 @@
 
 set -o xtrace
 
-ansible-playbook -i inventories/dev playbooks/setup-all.yml
+ansible-playbook -i ../ansible/inventories/dev ../ansible/playbooks/setup-all.yml

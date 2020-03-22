@@ -28,7 +28,7 @@ There are three main steps for perform the setup:
 
 2. Configuration *(this depends on your own purpose)*
 
-By default the scripts deploy only general setup. At this point you may optionally choose which services are deployed. Look at the `group_vars/all` and `inventory/localhost` for more details.
+By default the scripts deploy only general setup. At this point you may optionally choose which services are deployed. Look at the `ansible/group_vars/all` and `ansible/inventory/localhost` for more details.
 
 3. Run playbooks
 
@@ -46,7 +46,7 @@ vagrant up
 or install manually a VM, then inside the vm:
 
 ```sh
-ansible-playbook tests/test.yml -i tests/
+ansible-playbook ansible/tests/test.yml -i ansible/tests/
 ```
 
 Note: some steps may take time so it will fail as it prompts for password again while running, so run this command again:

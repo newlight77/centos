@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.cpus = 2
   end
 
-  config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder "./ansible", "/vagrant"
 
   if os == 'centos'
     config.vm.provision "init", privileged: true, type: "shell", inline: <<-SHELL
