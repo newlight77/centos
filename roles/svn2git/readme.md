@@ -15,11 +15,11 @@ svn2git $svn_repo --trunk trunk --branches branches --tags tags
 
 ## Migration guide
 
-1. clone the ci-kit
+1. clone the tool kit repositoy centos
 
 ```sh
-git clone https://github.com/newlight77/fedora-centos /apps/fedora-centos
-cd /apps/fedora-centos
+git clone https://github.com/newlight77/centos /apps/centos
+cd /apps/centos
 ```
 
 2. install the svn2git package
