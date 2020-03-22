@@ -8,8 +8,8 @@
     path: "{{playbook_dir}}/.common_packages_installed"
   register: common_packages_installed
 
-- name: debug
-  msg: "common_packages_installed = {{ common_packages_installed.stat }}"
+- debug:
+    msg: "common_packages_installed = {{ common_packages_installed.stat }}"
 
 - block:
 

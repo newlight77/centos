@@ -1,7 +1,18 @@
 ---
 
 - name: Enable ssh login using public key
-  shell: sed -e 's/#PubkeyAuthentication/PubkeyAuthentication/' -e 's/#AuthorizedKeysFile/AuthorizedKeysFile/ /etc/ssh/sshd_config'
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '#PubkeyAuthentication'
+    line: 'PubkeyAuthentication true'
+  # shell: sed -e 's/#PubkeyAuthentication/PubkeyAuthentication/' -e 's/#AuthorizedKeysFile/AuthorizedKeysFile/' /etc/ssh/sshd_config
+  become: yes
+
+- name: Enable ssh login using AuthorizedKeysFile
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '#AuthorizedKeysFile'
+    line: 'AuthorizedKeysFile'
   become: yes
 
 - name: "Ensure SSHD is restarted"
