@@ -1,0 +1,1 @@
+The Dockerfile.centos-7 is used for Travis build.

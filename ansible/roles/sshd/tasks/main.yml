@@ -4,7 +4,7 @@
   lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '#PubkeyAuthentication'
-    line: 'PubkeyAuthentication true'
+    line: 'PubkeyAuthentication yes'
   # shell: sed -e 's/#PubkeyAuthentication/PubkeyAuthentication/' -e 's/#AuthorizedKeysFile/AuthorizedKeysFile/' /etc/ssh/sshd_config
   become: yes
 
