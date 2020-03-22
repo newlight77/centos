@@ -1,0 +1,17 @@
+version: '3.2'
+
+services:
+
+  svn2git:
+    image: ryandocker/svn2git
+    container_name: svn2git
+    tty: true
+    volumes:
+      - ./migrate.sh:/appli/migrate.sh
+    environment: 
+      - SVN_URL=${SVN_URL}
+      - GIT_URL=${GIT_URL}
+    command: "sh /appli/migrate.sh"
+    # command: bash
+    # in case you want to run that inside the containwer, you override the env variables 
+    # sh /appli/migrate.sh -s=your_svn_url -g=your_git_url

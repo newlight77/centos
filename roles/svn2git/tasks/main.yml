@@ -8,7 +8,7 @@
 
 - name: copy docker-compose.yml file
   template:
-    src: docker-compose.yml.j2
+    src: docker-compose.yml
     dest: /apps/svn2git/docker-compose.yml
     owner: '{{ansible_user}}'
     group: '{{ansible_user}}'
@@ -17,7 +17,7 @@
 
 - name: copy migrate.sh file
   template:
-    src: migrate.sh.j2
+    src: migrate.sh
     dest: /apps/svn2git/migrate.sh
     owner: '{{ansible_user}}'
     group: '{{ansible_user}}'
