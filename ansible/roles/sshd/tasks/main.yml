@@ -1,5 +1,19 @@
 ---
 
+- name: Disable ssh login using PasswordAuthentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: 'PasswordAuthentication no'
+    line: '#PasswordAuthentication no'
+  become: yes
+
+- name: Enable ssh login using PasswordAuthentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '#PasswordAuthentication yes'
+    line: 'PasswordAuthentication yes'
+  become: yes
+
 - name: Enable ssh login using public key
   lineinfile:
     path: /etc/ssh/sshd_config

@@ -1,6 +1,9 @@
 user_group: "devops"
 
 users:
+  - name: ansible
+    group: "{{user_group}}"
+    sudoer: true
   - name: kong
     group: "{{user_group}}"
     sudoer: true
