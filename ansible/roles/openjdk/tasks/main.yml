@@ -6,7 +6,11 @@
 - name: "Check openjdk version is present"
   shell: "java --version | grep openjdk | awk '{print $2}' 2>&1"
   changed_when: false
-  register: current_version
+  register: stdout_version
+
+- name: set current version
+  set_fact: 
+    current_version: "{% if stdout_version.stdout != '' %}{{ stdout_version.stdout }}{% else %}0{% endif %}"
 
 - debug:
     msg: "Required version = {{ openjdk.version }} and current_version = {{ current_version }}"
@@ -31,6 +35,4 @@
     when: jdk_ver.rc != 0
 
   when: 
-    - current_version is succeeded
-    - current_version is defined
-    - current_version.stdout == "" or current_version.stdout | version_compare(openjdk.version, operator='<', strict=True)
+    - current_version is version(openjdk.version, '<')

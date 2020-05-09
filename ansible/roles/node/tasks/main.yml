@@ -4,15 +4,19 @@
 
 - name: check if NodeJs is installed?
   shell: node -v 2>&1 | grep -v | sed 's/v//'
-  register: current_version
+  register: stdout_version
   changed_when: false
   failed_when: false
   ignore_errors: true
   args:
     warn: no
 
+- name: set current version
+  set_fact: 
+    current_version: "{% if stdout_version.stdout != '' %}{{ stdout_version.stdout }}{% else %}0{% endif %}"
+
 - debug:
-    msg : "{{current_version.stdout}}"
+    msg: "Required version = {{ nodejs.version }} and current_version = {{ current_version }}"
 
 - block:
   - name: Import Nodesource RPM key
@@ -35,6 +39,4 @@
     become: yes
 
   when: 
-    - current_version is succeeded
-    - current_version is defined
-    - current_version.stdout == "" or current_version.stdout | version_compare(nodejs_version, operator='<', strict=True)
+    - current_version is version(nodejs_version, '<')

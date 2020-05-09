@@ -2,13 +2,17 @@
 
 - name: check version of docker
   shell: docker-compose --version | sed -e 's/,//' | awk '{print $3}' 2>&1 
-  register: current_version
+  register: stdout_version
   changed_when: false
   failed_when: false
   ignore_errors: true
   args:
     warn: no
   become: yes
+
+- name: set current version
+  set_fact: 
+    current_version: "{% if stdout_version.stdout != '' %}{{ stdout_version.stdout }}{% else %}0{% endif %}"
 
 - debug:
     msg: "Required version = {{ docker_compose.version }} and current_version = {{ current_version }}"
@@ -26,6 +30,4 @@
       - docker-compose
 
   when: 
-    - current_version is succeeded
-    - current_version is defined
-    - current_version.stdout == "" or current_version.stdout | version_compare(docker_compose.version, operator='<', strict=True)
+    - current_version is version(docker_compose.version, '<')
