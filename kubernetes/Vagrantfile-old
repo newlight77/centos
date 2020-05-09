@@ -1,0 +1,88 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = 'centos/7'
+  config.vm.box_check_update = false
+
+
+  # config.vm.synced_folder ".", "/vagrant"
+  config.ssh.insert_key = false
+
+  config.vm.define :control, primary: true do |control|
+    control.vm.network :private_network, ip: "192.168.10.0"
+    control.vm.hostname = "kube.control"
+    control.vm.synced_folder ".", "/vagrant"
+
+    # Tweak VirtualBox configuration for GUI applications
+    control.vm.provider :virtualbox do |v|
+      v.name = 'control'
+      v.memory = 1048
+      v.cpus = 1
+    end
+  end
+
+  config.vm.define :master do |master|
+    # config.vm.network "forwarded_port", guest: 22, host: 2222
+    # master.vm.network :public_network, ip: "192.168.10.0", bridge: 'en0: Wi-Fi (Wireless)'
+    # master.vm.network :public_network, ip: "192.168.11.0", :bridge => 'en0: Wi-Fi (Wireless)', adapter: 2
+    # master.vm.network :private_network, ip: "192.168.56.0", name: 'vboxnet0', adapter: 3
+    master.vm.network :private_network, ip: "192.168.11.0"
+    master.vm.hostname = "kube.master"
+    master.vm.synced_folder ".", "/vagrant"
+
+    # Tweak VirtualBox configuration for GUI applications
+    master.vm.provider :virtualbox do |v|
+      v.name = 'master'
+      v.memory = 2048
+      v.cpus = 2
+    end
+  end
+
+  config.vm.define :node1 do |node1|
+    # node1.vm.network "public_network", ip: "192.168.11.1"
+    node1.vm.network "private_network", ip: "192.168.111.1"
+    node1.vm.hostname = "kube.node1"
+    node1.vm.synced_folder ".", "/vagrant"
+
+    # Tweak VirtualBox configuration for GUI applications
+    node1.vm.provider :virtualbox do |v|
+      v.name = 'node1'
+      v.memory = 2048
+      v.cpus = 2
+    end
+  end
+
+  config.vm.define :node2 do |node2|
+    # node2.vm.network "public_network", ip: "192.168.11.2"
+    node2.vm.network "private_network", ip: "192.168.111.2"
+    node2.vm.hostname = "kube.node2"
+    node2.vm.synced_folder ".", "/vagrant"
+    # Tweak VirtualBox configuration for GUI applications
+    node2.vm.provider :virtualbox do |v|
+      v.name = 'node2'
+      v.memory = 2048
+      v.cpus = 2
+    end
+  end
+
+  # config.vm.provision "init", privileged: true, type: "shell", inline: <<-SHELL
+  #   # sudo yum update -y
+  #   sudo yum -y install python-dnf libselinux-python yum
+  #   sudo yum -y install ansible
+  # SHELL
+
+  # config.vm.provision "run", type: "shell", inline: <<-SHELL
+  #   cd /vagrant
+  #   su -c "ansible-playbook -u vagrant ./ansible/playbooks/setup-base.yml -i ./kubernetes/inventories" vagrant
+  # SHELL
+
+  config.vm.provision :ansible_local do |ansible|
+    ansible.playbook="./kubernetes/kube-cluster.yml"
+    # ansible.inventory_path="./kubernetes/inventories"
+  end
+
+
+ end

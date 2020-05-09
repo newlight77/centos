@@ -1,0 +1,22 @@
+---
+
+- name: create a ssh key
+  command: ssh-keygen -t rs -b 2048 -N "" -C "ansible"
+  # args:
+    # creates: /home/{{ansible_user}}/.ssh/id_rsa.pub
+
+- name: install ssh config file
+  template:
+    src: ssh_config.j2
+    dest: /home/{{ansible_user}}/.ssh/config
+    mode: 0600
+
+- name: check if ssh access to target works
+  command: ssh {{ target }} echo hello
+  ignore_errors: True
+  register: ssh_target
+
+- name: copy ssh to target VM
+  command: sshpass -p vagrant ssh-copy-id -i /home/{{ansible_user}}/.ssh/id_rsa.pub {{ item }}
+  with_items: "{{cluster}}"
+  when: ssh_target | failed
