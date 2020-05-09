@@ -1,0 +1,23 @@
+---
+
+# temm variables
+letsencrypt_domains_args: "{% for domain in letsencrypt_domains %}-d {{ domain }} {% endfor %}"
+letsencrypt_email_args: "{% if letsencrypt_email is defined %}--register-unsafely-without-email{% else %}--email {{ letsencrypt_email }}{% endif %}"
+
+letsencrypt:
+  domains: "{{ letsencrypt_domains }}"
+  email: "{{ letsencrypt_email }}"
+  rsa_key_size: "{{ letsencrypt_rsa_key_size }}"
+  webroot_path: "{{ letsencrypt_webroot_path }}"
+  renewal_frequency: "{{ letsencrypt_renewal_frequency }}"
+  certificate_name: "{{letsencrypt_certificate_name}}"
+  authenticator: "{{letsencrypt_authenticator}}"
+
+  ## internal variables
+  command: "/bin/letsencrypt -n --agree-tos --rsa-key-size {{ letsencrypt_rsa_key_size }} --text {{letsencrypt_domains_args}} {{ letsencrypt_email_args }} --expand"
+  renewal_command: "/bin/letsencrypt renew --quiet --renew-hook 'systemctl restart {{letsencrypt_server_name}}'"
+  standalone_command: "/bin/letsencrypt -a standalone auth"
+
+
+
+

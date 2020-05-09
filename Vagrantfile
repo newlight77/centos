@@ -28,6 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "init", privileged: true, type: "shell", inline: <<-SHELL
       # sudo yum update -y
       sudo yum -y install python-dnf libselinux-python yum
+      sudo yum -y install epel-release
       sudo yum -y install ansible
     SHELL
   else
@@ -41,6 +42,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "run", type: "shell", inline: <<-SHELL
     cd /vagrant
     su -c "ansible-playbook -u vagrant ./tests/test.yml -i ./tests/inventories" vagrant
+  SHELL
+
+  config.vm.provision "letsencrypt", type: "shell", inline: <<-SHELL
+    cd /vagrant
+    su -c "ansible-playbook -u vagrant ./ansible/playbooks/setup-letsencrypt.yml -i ./ansible/inventories/dev" vagrant
   SHELL
 
  end
