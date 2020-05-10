@@ -1,0 +1,7 @@
+---
+
+- name: start nginx
+  service: name=nginx state=started
+
+- name: reload nginx
+  command: /usr/bin/systemctl reload nginx

@@ -1,0 +1,7 @@
+---
+
+firewall:
+  cmds: "{{ firewall_cmds }}"
+
+iptables:
+  ports: "{{ iptables_ports }}"

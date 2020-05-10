@@ -1,0 +1,10 @@
+---
+
+firewall_cmds:
+    - "--add-service=http"
+    - "--add-service=https"
+    - "--runtime-to-permanent"
+
+iptables_ports:
+    - "-I INPUT -p tcp -m tcp --dport 80 -j ACCEPT"
+    - "-I INPUT -p tcp -m tcp --dport 443 -j ACCEPT"

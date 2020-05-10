@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+
+  vars:
+    server_names:
+      - "example.com"
+      - "www.example.com"
+
+  roles:
+    - nginx

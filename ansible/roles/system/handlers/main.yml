@@ -1,0 +1,7 @@
+---
+
+- name: reload firewalld
+  command: /bin/firewall-cmd --reload
+
+- name: reload systemd
+  command: /usr/bin/systemctl --system daemon-reload

@@ -1,0 +1,4 @@
+---
+
+server:
+  names: "{{ server_names }}"

@@ -1,0 +1,21 @@
+---
+
+- name: open ports
+  command: "firewall-cmd {{ cmd }}"
+  with_items: "{{ firewall.cmds }}"
+  become: yes
+
+- name: open ports
+  command: "iptables {{ porrt }}"
+  with_items: "{{ iptables.ports }}"
+  become: yes
+
+- name: "Ensure firewalld is reloaded"
+  command: /bin/true
+  notify: reload firewalld
+  when: ansible_env.USER is defined
+
+- name: "Ensure systemd is reloaded"
+  command: /bin/true
+  notify: reload systemd
+  when: ansible_env.USER is defined

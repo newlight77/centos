@@ -1,0 +1,34 @@
+---
+
+- name: ensure nginx is installed.
+  package:
+    name: '{{ item }}'
+    state: present
+  become: yes
+  with_items:
+    - nginx
+
+- name: "ensure nginx is starteed"
+  command: /bin/true
+  notify: start nginx
+  when: ansible_env.USER is defined
+
+- name: copy nginx configuration into place.
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0440
+    force: yes
+    validate: 'visudo -cf %s'
+  become: yes
+
+- name: verify the syntax of your configuration
+  command: "nginx -t"
+  become: yes
+
+- name: "ensure nginx is reloaded"
+  command: /bin/true
+  notify: reload nginx
+  when: ansible_env.USER is defined

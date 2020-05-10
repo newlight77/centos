@@ -1,0 +1,5 @@
+---
+
+server_names:
+    - "example.com"
+    - "www.example.com"
