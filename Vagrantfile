@@ -28,6 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "init", privileged: true, type: "shell", inline: <<-SHELL
       # sudo yum update -y
       sudo yum -y install python-dnf libselinux-python yum
+      sudo yum -y install epel-release
       sudo yum -y install ansible
     SHELL
   else
