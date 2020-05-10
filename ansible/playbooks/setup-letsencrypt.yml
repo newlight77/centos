@@ -1,0 +1,15 @@
+---
+
+- hosts: localhost
+
+  vars:
+    letsencrypt:
+      email: admin@example.com
+      domains:
+        - www.example.com
+      rsa_key_size: 1024
+      path: /var/www/nginx-default
+
+  roles:
+    - letsencrypt
+

@@ -44,4 +44,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     su -c "ansible-playbook -u vagrant ./tests/test.yml -i ./tests/inventories" vagrant
   SHELL
 
+  config.vm.provision "letsencrypt", type: "shell", inline: <<-SHELL
+    cd /vagrant
+    su -c "ansible-playbook -u vagrant ./ansible/playbooks/setup-letsencrypt.yml -i ./ansible/inventories/dev" vagrant
+  SHELL
+
  end

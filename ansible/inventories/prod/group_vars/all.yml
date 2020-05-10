@@ -13,3 +13,16 @@ motd:
 rpmfusion:
   centos:
     version: 7
+
+letsencrypt:
+  email: admin@example.com
+  domains:
+    - www.example.com
+  rsa_key_size: 1024
+  webroot_path: /var/www/nginx-default
+  renewal_frequency:
+    day: "*"
+    hour: "3"
+    minute: "15"
+  certificate_name: example.com
+  authenticator: webroot

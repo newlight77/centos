@@ -1,0 +1,15 @@
+---
+# default values
+letsencrypt_domains:
+    - "example.com"
+    - "www.example.com"
+letsencrypt_email: "newlight77@gmail.com"
+letsencrypt_webroot_path: "/var/www/nginx-default"
+letsencrypt_rsa_key_size: "2048"
+letsencrypt_certificate_name: "example.com"
+letsencrypt_renewal_frequency:
+    day: "*"
+    hour: "3"
+    minute: "15"
+letsencrypt_server_name: nginx
+letsencrypt_authenticator: webroot
