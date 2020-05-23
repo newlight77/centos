@@ -1,14 +1,17 @@
 ---
 
+- include: setup-base.yml
+
 - hosts: all
 
   roles:
     - role: common
     - role: motd
     - role: sshd
-    - role: sudoers
     - role: rpmfusion
     - role: bash-custom
+    - role: sudoers
+    - role: create_users
 
   tasks:
     - include: ../tasks/cleanup.yml
